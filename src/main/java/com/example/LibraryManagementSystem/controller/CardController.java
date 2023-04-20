@@ -5,10 +5,7 @@ import com.example.LibraryManagementSystem.dtos.responseDto.BooksCurrentlyIssued
 import com.example.LibraryManagementSystem.exceptions.CardNotFoundException;
 import com.example.LibraryManagementSystem.service.CardService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/card")
@@ -19,5 +16,10 @@ public class CardController {
     @GetMapping("/listOfBooksIssued")
     public BooksCurrentlyIssuedByCardResponseDto listOfBooksIssued(@RequestBody BooksCurrentlyIssuedByCardRequestDto booksCurrentlyIssuedByCardRequestDto) throws CardNotFoundException {
         return cardService.listOfBooksIssued(booksCurrentlyIssuedByCardRequestDto);
+    }
+
+    @GetMapping("/noOfBookIssuedCurrently")
+    public int noOfBookIssuedCurrentlyToParticularStudent(@RequestParam("id") Integer id) throws CardNotFoundException {
+        return cardService.noOfBookIssuedCurrentlyToParticularStudent(id);
     }
 }

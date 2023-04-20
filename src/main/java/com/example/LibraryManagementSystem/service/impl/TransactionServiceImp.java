@@ -161,6 +161,8 @@ public class TransactionServiceImp implements TransactionService {
         card.setBook(books);
         transaction.setCard(card);
 
+
+
         cardRepository.save(card); //As card is parent of book and transaction, so it will automatically save the other child database also.
 
         TransactionResponseDto transactionResponseDto =new TransactionResponseDto();
@@ -168,8 +170,20 @@ public class TransactionServiceImp implements TransactionService {
         transactionResponseDto.setTransactionStatus(transaction.getTransactionStatus());
         transactionResponseDto.setTransactionDate(transaction.getTransactionDate());
 
+
+        SimpleMailMessage mailMessage = new SimpleMailMessage();
+        String text= "Congratulations!!  "+card.getStudent().getName()+"  The Book '"+book.getTitle()+"' is Successfully Returned. Thank You!!!";
+        // Setting up necessary details
+        mailMessage.setFrom("abhisheklms0@gmail.com");
+        mailMessage.setTo(card.getStudent().getEmail());
+        mailMessage.setText(text);
+        mailMessage.setSubject("Issued Book");
+
+        // Sending the mail
+        javaMailSender.send(mailMessage);
         return transactionResponseDto;
     }
+
 
 
 }

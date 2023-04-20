@@ -43,4 +43,17 @@ public class CardServiceImp implements CardService {
             throw new CardNotFoundException("Invalid card Id");
         }
     }
+
+    @Override
+    public int noOfBookIssuedCurrentlyToParticularStudent(int id) throws CardNotFoundException {
+        try{
+            Card card= cardRepository.findById(id).get();
+            List<Book> books =card.getBook();
+            int ans =books.size();
+            return ans;
+
+        }catch (Exception e){
+            throw new CardNotFoundException("Invalid Card Id");
+        }
+    }
 }
